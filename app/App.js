@@ -213,14 +213,14 @@ function Reset({reset}) {
   return (
     <Pressable
     type="button"
-    className="w-2/3 md:px-4 px-6 py-3 bg-strong_cyan 
+    className=" md:px-4 px-20 py-3 bg-strong_cyan 
                text-very_dark_cyan font-bold text-lg 
                rounded-lg "
                
     onPress={reset}
     
   >
-    <Text className="text-center text-very_dark_cyan text-lg">
+    <Text className="text-center text-very_dark_cyan  font-semibold text-xl">
       Reset
     </Text>
   </Pressable>
