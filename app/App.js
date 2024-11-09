@@ -16,31 +16,34 @@ import Personsvg from "../assets/icon-person.png";
 import Dollar from "../assets/icon-dollar.png";
 import "../global.css";
 import { useRef, useState } from "react";
+import Welcome from "./Welcome";
 export default function App() {
-  const [bill, setBill] = useState(0);
+  const [bill, setBill] = useState("");
   const [tip, setTip] = useState(0);
-  const [people, setPeople] = useState(0);
+  const [people, setPeople] = useState("");
   const [selected, setSelected] = useState(0);
-  let tpp = 0;
-  let totalpp = 0;
+  const [isStarted,setIsStarted] = useState(false)
+  let tpp = "";
+  let totalpp = "";
 
   if (Number(bill) > 0 && Number(tip) > 0 && Number(people) > 0) {
     tpp = ((Number(tip) / 100) * Number(bill) )/ Number(people);
     totalpp = bill / people + tpp;
   }
   function handleReset() {
-    setBill(0);
-    setTip(0);
-    setPeople(0);
+    setBill("");
+    setTip("");
+    setPeople("");
     setSelected(0);
   }
   return (
     <SafeAreaView className="flex-1 bg-black">
       <StatusBar  backgroundColor="#c5e4e7" barStyle={"light-content"} />
-      <ScrollView>
+     <Welcome isStarted={isStarted} setIsStarted={setIsStarted} />
+      <ScrollView className={` ${isStarted ? "" :"hidden"}`}>
         <SafeAreaView className="flex-1 bg-light_grayish_cyan ">
           <View className="  bg-light_grayish_cyan  items-center w-full    mt-10 mb-10">
-            <Text className="text-very_dark_cyan text-lg tracking-[8px] font-bold text-center">
+            <Text className="text-very_dark_cyan text-lg tracking-[2px] font-bold text-center">
               SPLITTER
             </Text>
            
@@ -62,7 +65,7 @@ function BillInput({setBill,bill}) {
   
   return (
     <View className="gap-y-2 ">
-      <Text className="text-grayish_cyan text-lg font-semibold font-mono">
+      <Text className="text-grayish_cyan text-lg font-semibold tracking-[-1px]">
         Bill
       </Text>
       <View className="flex-row  w-full h-[50px] bg-very_light_grayish_cyan items-center px-5  rounded-2xl ">
@@ -74,7 +77,7 @@ function BillInput({setBill,bill}) {
         }
           value={bill.toString()}
           keyboardType="numeric"
-          className=" h-full bg-very_light_grayish_cyan pl-40  font-bold text-2xl text-very_dark_cyan "
+          className=" h-full bg-very_light_grayish_cyan pl-40  font-bold text-2xl text-very_dark_cyan   tracking-[-1px]"
         ></TextInput>
       </View>
     </View>
@@ -85,7 +88,7 @@ function TipEntry({setTip,selected,setSelected}) {
   
   return (
     <View className="gap-y-4 w-[311px] " >
-      <Text className="text-grayish_cyan text-lg font-semibold font-mono">
+      <Text className="text-grayish_cyan text-lg font-semibold tracking-[-1px]">
         Select Tip %
       </Text>
       <View className="flex-2 flex-row flex-wrap gap-5 bg-white items-center    rounded-2xl  ">
@@ -96,7 +99,7 @@ function TipEntry({setTip,selected,setSelected}) {
         <TipButton tip={50}   setTip={setTip} setSelected={setSelected} selected={selected}/>
         <TextInput
           type="text"
-          className=" w-[135px] pl-5 bg-light_grayish_cyan text-grayish_cyan font-medium text-2xl  py-2 rounded-lg"
+          className=" w-[135px] h-12 px-10 bg-light_grayish_cyan text-grayish_cyan font-medium text-md  py-2 rounded-lg  tracking-[-1px]"
           placeholder="Custom%"
           keyboardType="numeric"
           onChangeText={newText => {setTip(newText)
@@ -122,7 +125,7 @@ function TipButton({ tip,setTip,setSelected ,selected}) {
     <Pressable onPress={()=> {setTip(tip)
       handleSelection()
     }} className={`w-[135.63px] h-[50px]  ${selected === tip ? "bg-strong_cyan": "bg-very_dark_cyan"} font-bold text-2xl rounded-lg py-3`}>
-      <Text className={`${selected === tip ? "text-black" :"text-white"} text-lg font-bold text-center`}>{tip}%</Text>
+      <Text className={`${selected === tip ? "text-black" :"text-white"} text-lg font-bold text-center  tracking-[-1px]`}>{tip}%</Text>
     </Pressable>
   );
 }
@@ -130,7 +133,7 @@ function TipButton({ tip,setTip,setSelected ,selected}) {
 function NumberofPeople({setPeople,people}) {
   return (
     <View className="gap-y-2 ">
-      <Text className="text-grayish_cyan text-lg font-semibold ">
+      <Text className="text-grayish_cyan text-lg font-semibold tracking-[-1px] ">
         Number of People
       </Text>
       <View className="flex-row  w-full h-[50px] bg-very_light_grayish_cyan items-center px-5  rounded-2xl ">
@@ -151,7 +154,7 @@ function TotalDisplay2({total}) {
     <View className="flex flex-row justify-between items-center mt-8 px-4">
     {/* Label Section */}
     <View className="flex-row items-center space-x-2">
-      <Text className="text-white font-semibold text-base sm:text-lg">Total</Text>
+      <Text className="text-white font-medium text-base sm:text-lg  tracking-[-1px]">Total</Text>
       <Text className="text-grayish_cyan text-sm sm:text-base">/ person</Text>
     </View>
   
@@ -174,7 +177,7 @@ function TotalDisplay({tip}) {
     <View className="flex flex-row justify-between items-center mt-8 px-4">
 
   <View className="flex-row items-center space-x-2">
-    <Text className="text-white font-semibold text-base sm:text-lg">Tip</Text>
+    <Text className="text-white font-semibold text-base sm:text-lg  tracking-[-1px]">Tip</Text>
     <Text className="text-grayish_cyan text-sm sm:text-base">/ person</Text>
   </View>
 
@@ -182,7 +185,7 @@ function TotalDisplay({tip}) {
     <Text className="text-strong_cyan text-lg sm:text-xl font-semibold">$</Text>
     <Text
       id="totalperperson"
-      className="text-2xl sm:text-3xl font-bold text-strong_cyan"
+      className="text-2xl sm:text-3xl font-bold text-strong_cyan  "
     >
       {tip}
     </Text>
@@ -215,12 +218,12 @@ function Reset({reset}) {
     type="button"
     className=" md:px-4 px-20 py-3 bg-strong_cyan 
                text-very_dark_cyan font-bold text-lg 
-               rounded-lg "
+               rounded-lg  mt-8"
                
     onPress={reset}
     
   >
-    <Text className="text-center text-very_dark_cyan  font-semibold text-xl">
+    <Text className="text-center text-very_dark_cyan  font-semibold text-xl  tracking-[-1px]">
       Reset
     </Text>
   </Pressable>
