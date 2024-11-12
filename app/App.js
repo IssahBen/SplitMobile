@@ -38,7 +38,7 @@ export default function App() {
   }
   return (
     <SafeAreaView className="flex-1 bg-black">
-      <StatusBar  backgroundColor="#c5e4e7" barStyle={"light-content"} />
+      <StatusBar  backgroundColor={`${isStarted? "#c5e4e7":"#FFFFFF"}`} barStyle={"light-content"} />
      <Welcome isStarted={isStarted} setIsStarted={setIsStarted} />
       <ScrollView className={` ${isStarted ? "" :"hidden"}`}>
         <SafeAreaView className="flex-1 bg-light_grayish_cyan ">
